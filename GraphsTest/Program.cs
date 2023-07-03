@@ -806,8 +806,52 @@ Console.WriteLine("Graphs Test Project");
 //            PrintInLine(path);
 //        }
 //    }
-    
+
 //}
+
+#endregion
+
+#region Bridges Detection
+
+AdjacentListGraph<byte, float> bdGraph = new AdjacentListGraph<byte, float>(
+    new List<AdjListVertex<byte, float>>() { 0,1,2,3,4,5,6,7,8 }
+    );
+
+bdGraph.AddBiDirectionalEdge(0, 1, 1, 1);
+
+bdGraph.AddBiDirectionalEdge(0, 2, 1, 1);
+
+bdGraph.AddBiDirectionalEdge(1, 2, 1, 1);
+
+bdGraph.AddBiDirectionalEdge(2, 5, 1, 1);
+
+bdGraph.AddBiDirectionalEdge(2, 3, 1, 1);
+
+bdGraph.AddBiDirectionalEdge(3, 4, 1, 1);
+
+bdGraph.AddBiDirectionalEdge(5, 6, 1, 1);
+
+bdGraph.AddBiDirectionalEdge(6, 7, 1, 1);
+
+bdGraph.AddBiDirectionalEdge(7, 8, 1, 1);
+
+bdGraph.AddBiDirectionalEdge(8, 5, 1, 1);
+
+Console.WriteLine(bdGraph);
+
+BridgesDetector<AdjListVertex<byte, float>, byte, float> BD =
+    new BridgesDetector<AdjListVertex<byte, float>, byte, float>(bdGraph);
+
+var r = BD.Solve(new BridgeDetectorArgs<byte>(23));
+
+if (!r.HasError)
+{
+    var bridges = (Dictionary<byte,byte>)r.Result[0];
+
+    PrintMessage("Bridges in graph are:", ConsoleColor.Green);
+
+    PrintInLine(bridges);
+}
 
 #endregion
 

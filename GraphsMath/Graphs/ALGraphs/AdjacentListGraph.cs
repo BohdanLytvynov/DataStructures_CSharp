@@ -408,6 +408,13 @@ namespace GraphsMath.Graphs.ALGraphs
             return new AdjacentListGraph<TVertexKey, TWeight>(this);
         }
 
+        public void AddBiDirectionalEdge(TVertexKey start, TVertexKey end, TWeight forward, TWeight backward)
+        {
+            AddEdge(start, end, forward);
+
+            AddEdge(end, start, backward);
+        }
+
         #endregion
 
         #endregion

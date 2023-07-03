@@ -25,7 +25,7 @@ namespace GraphsMath.SolvingOfProblems
         private void DFSMod(TVertexKey at, 
             TVertexKey parent, Dictionary<TVertexKey, bool> visited, ref int id,
             Dictionary<TVertexKey, int> ids, Dictionary<TVertexKey, int> low_links,
-            List<TVertexKey> bridges )
+            Dictionary<TVertexKey, TVertexKey> bridges )
         {
             visited[at] = true;
 
@@ -37,29 +37,27 @@ namespace GraphsMath.SolvingOfProblems
 
             foreach (var n in neighbors)
             {
-                var key = Graph.GetVertexKeyFromVertex(n);
+                var Nkey = Graph.GetVertexKeyFromVertex(n);
 
-                if (key.Equals(parent))
+                if (Nkey.Equals(parent))
                 {
                     continue;
                 }
 
-                if (!visited[key])
+                if (!visited[Nkey])
                 {                    
-                    DFSMod(key, at, visited, ref id, ids, low_links, bridges );
+                    DFSMod(Nkey, at, visited, ref id, ids, low_links, bridges );
 
-                    low_links[at] = Math.Min(low_links[at], low_links[key]);
+                    low_links[at] = Math.Min(low_links[at], low_links[Nkey]);
 
-                    if (ids[at] < low_links[key])
+                    if (ids[at] < low_links[Nkey])
                     {
-                        bridges.Add(at);
-
-                        bridges.Add(key);
+                        bridges.Add(Nkey, at);                        
                     }
                 }
                 else
                 {
-                    low_links[at] = Math.Min(low_links[at], ids[key]);
+                    low_links[at] = Math.Min(low_links[at], ids[Nkey]);
                 }
             }
 
@@ -77,7 +75,8 @@ namespace GraphsMath.SolvingOfProblems
 
             int id = 0;
 
-            List<TVertexKey> bridges = new List<TVertexKey>();
+            Dictionary<TVertexKey, TVertexKey> bridges =
+                new Dictionary<TVertexKey, TVertexKey>();
 
             Dictionary<TVertexKey, bool> visited = Graph.InitializeVisitDS();// Visit DS
 

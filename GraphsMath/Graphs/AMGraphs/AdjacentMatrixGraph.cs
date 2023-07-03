@@ -77,6 +77,14 @@ namespace GraphsMath.Graphs.AMGraphs
             m_AdjacencyMatrix[start, end] = weight;            
         }
 
+        public void AddBiDirectionalEdge(int start, int end, 
+            TWeight forward, TWeight backward)
+        {
+            AddEdge(start, end, forward);
+
+            AddEdge(end, start, backward);
+        }
+
         public void RemoveEdge(int start, int end)
         {
             m_AdjacencyMatrix[start, end] = m_NoEdgeValue;            
@@ -379,7 +387,9 @@ namespace GraphsMath.Graphs.AMGraphs
 
             return edges;
         }
-       
+
+        
+
         #endregion
 
 

@@ -50,6 +50,10 @@ namespace GraphsMath.Graphs.Interfaces
 
         void AddEdge(TVertexKey start, TVertexKey end, TWeight weight);
 
+        void AddBiDirectionalEdge(TVertexKey start, TVertexKey end, TWeight forward,
+            TWeight backward);
+        
+
         void RemoveEdge(TVertexKey start, TVertexKey end);
 
         void EditEdge(TVertexKey start, TVertexKey end, TWeight weight = default);
