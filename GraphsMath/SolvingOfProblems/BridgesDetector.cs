@@ -39,6 +39,7 @@ namespace GraphsMath.SolvingOfProblems
             {
                 var Nkey = Graph.GetVertexKeyFromVertex(n);
 
+                //Condition to prevent back recurtion in undir graph
                 if (Nkey.Equals(parent))
                 {
                     continue;
@@ -48,6 +49,8 @@ namespace GraphsMath.SolvingOfProblems
                 {                    
                     DFSMod(Nkey, at, visited, ref id, ids, low_links, bridges );
 
+                    //Recursive callback when we come back after recurtion
+
                     low_links[at] = Math.Min(low_links[at], low_links[Nkey]);
 
                     if (ids[at] < low_links[Nkey])
@@ -55,7 +58,8 @@ namespace GraphsMath.SolvingOfProblems
                         bridges.Add(Nkey, at);                        
                     }
                 }
-                else
+                else//Recursive call back when we come to already visited vertex
+                //finished cycle of verteces
                 {
                     low_links[at] = Math.Min(low_links[at], ids[Nkey]);
                 }

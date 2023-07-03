@@ -811,47 +811,77 @@ Console.WriteLine("Graphs Test Project");
 
 #endregion
 
-#region Bridges Detection
+#region Bridges Detection 1
+//AdjacentListGraph<byte, float> bdGraph = new AdjacentListGraph<byte, float>(
+//    new List<AdjListVertex<byte, float>>() { 0, 1, 2, 3, }
+//    );
 
-AdjacentListGraph<byte, float> bdGraph = new AdjacentListGraph<byte, float>(
-    new List<AdjListVertex<byte, float>>() { 0,1,2,3,4,5,6,7,8 }
-    );
+//bdGraph.AddBiDirectionalEdge(0, 1, 1, 1);
 
-bdGraph.AddBiDirectionalEdge(0, 1, 1, 1);
+//bdGraph.AddBiDirectionalEdge(1, 2, 1, 1);
 
-bdGraph.AddBiDirectionalEdge(0, 2, 1, 1);
+//bdGraph.AddBiDirectionalEdge(2, 3, 1, 1);
 
-bdGraph.AddBiDirectionalEdge(1, 2, 1, 1);
+//bdGraph.AddBiDirectionalEdge(1, 3, 1, 1);
 
-bdGraph.AddBiDirectionalEdge(2, 5, 1, 1);
+//Console.WriteLine(bdGraph);
 
-bdGraph.AddBiDirectionalEdge(2, 3, 1, 1);
+//BridgesDetector<AdjListVertex<byte, float>, byte, float> BD =
+//    new BridgesDetector<AdjListVertex<byte, float>, byte, float>(bdGraph);
 
-bdGraph.AddBiDirectionalEdge(3, 4, 1, 1);
+//var r = BD.Solve(new BridgeDetectorArgs<byte>((byte)(bdGraph.VertexCount + 1)));
 
-bdGraph.AddBiDirectionalEdge(5, 6, 1, 1);
+//if (!r.HasError)
+//{
+//    var bridges = (Dictionary<byte, byte>)r.Result[0];
 
-bdGraph.AddBiDirectionalEdge(6, 7, 1, 1);
+//    PrintMessage("Bridges in graph are:", ConsoleColor.Green);
 
-bdGraph.AddBiDirectionalEdge(7, 8, 1, 1);
+//    PrintInLine(bridges);
+//}
+#endregion
 
-bdGraph.AddBiDirectionalEdge(8, 5, 1, 1);
+#region Bridges Detection 2
 
-Console.WriteLine(bdGraph);
+//AdjacentListGraph<byte, float> bdGraph = new AdjacentListGraph<byte, float>(
+//    new List<AdjListVertex<byte, float>>() { 0, 1, 2, 3, 4, 5, 6, 7, 8 }
+//    );
 
-BridgesDetector<AdjListVertex<byte, float>, byte, float> BD =
-    new BridgesDetector<AdjListVertex<byte, float>, byte, float>(bdGraph);
+//bdGraph.AddBiDirectionalEdge(0, 1, 1, 1);
 
-var r = BD.Solve(new BridgeDetectorArgs<byte>(23));
+//bdGraph.AddBiDirectionalEdge(0, 2, 1, 1);
 
-if (!r.HasError)
-{
-    var bridges = (Dictionary<byte,byte>)r.Result[0];
+//bdGraph.AddBiDirectionalEdge(1, 2, 1, 1);
 
-    PrintMessage("Bridges in graph are:", ConsoleColor.Green);
+//bdGraph.AddBiDirectionalEdge(2, 5, 1, 1);
 
-    PrintInLine(bridges);
-}
+//bdGraph.AddBiDirectionalEdge(2, 3, 1, 1);
+
+//bdGraph.AddBiDirectionalEdge(3, 4, 1, 1);
+
+//bdGraph.AddBiDirectionalEdge(5, 6, 1, 1);
+
+//bdGraph.AddBiDirectionalEdge(6, 7, 1, 1);
+
+//bdGraph.AddBiDirectionalEdge(7, 8, 1, 1);
+
+//bdGraph.AddBiDirectionalEdge(8, 5, 1, 1);
+
+//Console.WriteLine(bdGraph);
+
+//BridgesDetector<AdjListVertex<byte, float>, byte, float> BD =
+//    new BridgesDetector<AdjListVertex<byte, float>, byte, float>(bdGraph);
+
+//var r = BD.Solve(new BridgeDetectorArgs<byte>((byte)(bdGraph.VertexCount + 1)));
+
+//if (!r.HasError)
+//{
+//    var bridges = (Dictionary<byte, byte>)r.Result[0];
+
+//    PrintMessage("Bridges in graph are:", ConsoleColor.Green);
+
+//    PrintInLine(bridges);
+//}
 
 #endregion
 
