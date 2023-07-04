@@ -885,6 +885,38 @@ Console.WriteLine("Graphs Test Project");
 
 #endregion
 
+#region Articulation Point Detection
+
+AdjacentListGraph<byte, float> ArtPointDetectionGraph = new AdjacentListGraph<byte, float>(
+    new List<AdjListVertex<byte, float>>() { 0, 1, 2, 3, }
+    );
+
+ArtPointDetectionGraph.AddBiDirectionalEdge(0, 1, 1, 1);
+
+ArtPointDetectionGraph.AddBiDirectionalEdge(1, 2, 1, 1);
+
+ArtPointDetectionGraph.AddBiDirectionalEdge(2, 3, 1, 1);
+
+ArtPointDetectionGraph.AddBiDirectionalEdge(1, 3, 1, 1);
+
+Console.WriteLine(ArtPointDetectionGraph);
+
+ArticulationPointDetector<AdjListVertex<byte, float>, byte, float> APD =
+    new ArticulationPointDetector<AdjListVertex<byte, float>, byte, float>(ArtPointDetectionGraph);
+
+var r = APD.Solve(new ArticulationPointDetectorArgs<byte> ((byte)(ArtPointDetectionGraph.VertexCount + 1)));
+
+if (!r.HasError)
+{
+    PrintMessage("Articulation Points detected in a graph:", ConsoleColor.Green);
+
+    var artPoints = (Dictionary<byte, bool>)r.Result[0];
+
+    PrintInLine(artPoints);
+}
+
+#endregion
+
 #endregion
 
 Console.WriteLine();
