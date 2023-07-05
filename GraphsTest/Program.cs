@@ -887,32 +887,84 @@ Console.WriteLine("Graphs Test Project");
 
 #region Articulation Point Detection
 
-AdjacentListGraph<byte, float> ArtPointDetectionGraph = new AdjacentListGraph<byte, float>(
-    new List<AdjListVertex<byte, float>>() { 0, 1, 2, 3, }
+//AdjacentListGraph<byte, float> ArtPointDetectionGraph = new AdjacentListGraph<byte, float>(
+//    new List<AdjListVertex<byte, float>>() { 0, 1, 2, 3, }
+//    );
+
+//ArtPointDetectionGraph.AddBiDirectionalEdge(0, 1, 1, 1);
+
+//ArtPointDetectionGraph.AddBiDirectionalEdge(1, 2, 1, 1);
+
+//ArtPointDetectionGraph.AddBiDirectionalEdge(2, 3, 1, 1);
+
+//ArtPointDetectionGraph.AddBiDirectionalEdge(1, 3, 1, 1);
+
+//Console.WriteLine(ArtPointDetectionGraph);
+
+//ArticulationPointDetector<AdjListVertex<byte, float>, byte, float> APD =
+//    new ArticulationPointDetector<AdjListVertex<byte, float>, byte, float>(ArtPointDetectionGraph);
+
+//var r = APD.Solve(new ArticulationPointDetectorArgs<byte> ((byte)(ArtPointDetectionGraph.VertexCount + 1)));
+
+//if (!r.HasError)
+//{
+//    PrintMessage("Articulation Points detected in a graph:", ConsoleColor.Green);
+
+//    var artPoints = (Dictionary<byte, bool>)r.Result[0];
+
+//    PrintInLine(artPoints);
+//}
+
+#endregion
+
+#region Strongly connected components detection
+
+AdjacentListGraph<string, float> SCCGraph = new AdjacentListGraph<string, float>(
+    new List<AdjListVertex<string, float>>() { "A", "B","C", "D", "E", "F", "G", "H", "I" }
     );
 
-ArtPointDetectionGraph.AddBiDirectionalEdge(0, 1, 1, 1);
+SCCGraph.AddBiDirectionalEdge("A", "B", 1, 1);
 
-ArtPointDetectionGraph.AddBiDirectionalEdge(1, 2, 1, 1);
+SCCGraph.AddBiDirectionalEdge("A", "C", 1, 1);
 
-ArtPointDetectionGraph.AddBiDirectionalEdge(2, 3, 1, 1);
+SCCGraph.AddEdge("B", "D", 1);
 
-ArtPointDetectionGraph.AddBiDirectionalEdge(1, 3, 1, 1);
+SCCGraph.AddEdge("C", "D", 1);
 
-Console.WriteLine(ArtPointDetectionGraph);
+SCCGraph.AddBiDirectionalEdge("D", "F", 1, 1);
 
-ArticulationPointDetector<AdjListVertex<byte, float>, byte, float> APD =
-    new ArticulationPointDetector<AdjListVertex<byte, float>, byte, float>(ArtPointDetectionGraph);
+SCCGraph.AddEdge("E", "B", 1);
 
-var r = APD.Solve(new ArticulationPointDetectorArgs<byte> ((byte)(ArtPointDetectionGraph.VertexCount + 1)));
+SCCGraph.AddEdge("E", "I", 1);
+
+SCCGraph.AddEdge("E", "F", 1);
+
+SCCGraph.AddEdge("G", "E", 1);
+
+SCCGraph.AddEdge("H", "G", 1);
+
+SCCGraph.AddEdge("H", "I", 1);
+
+SCCGraph.AddEdge("H", "H", 1);
+
+SCCGraph.AddEdge("I", "F", 1);
+
+SCCGraph.AddEdge("I", "G", 1);
+
+Console.WriteLine(SCCGraph);
+
+StronglyConnectedComponentsDetector<AdjListVertex<string, float>, string, float> SCCC =
+    new StronglyConnectedComponentsDetector<AdjListVertex<string, float>, string, float>(SCCGraph);
+
+var r = SCCC.Solve();
 
 if (!r.HasError)
 {
-    PrintMessage("Articulation Points detected in a graph:", ConsoleColor.Green);
+    PrintMessage("Strongly Connected Components are:", ConsoleColor.Green);
 
-    var artPoints = (Dictionary<byte, bool>)r.Result[0];
+    var lowlink = (Dictionary<string, int>)r.Result[0];
 
-    PrintInLine(artPoints);
+    PrintInLine(lowlink);
 }
 
 #endregion

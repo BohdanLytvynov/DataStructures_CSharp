@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DoubledLinkedList\DoubledLinkedList.csproj" />
     <ProjectReference Include="..\QueueLinkedList\QueueLinkedList.csproj" />
+    <ProjectReference Include="..\Stack\Stack.csproj" />
   </ItemGroup>
 
 </Project>
