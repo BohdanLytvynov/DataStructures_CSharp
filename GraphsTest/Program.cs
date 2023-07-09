@@ -919,52 +919,92 @@ Console.WriteLine("Graphs Test Project");
 
 #region Strongly connected components detection
 
-AdjacentListGraph<string, float> SCCGraph = new AdjacentListGraph<string, float>(
-    new List<AdjListVertex<string, float>>() { "A", "B","C", "D", "E", "F", "G", "H", "I" }
-    );
+//AdjacentListGraph<string, float> SCCGraph = new AdjacentListGraph<string, float>(
+//    new List<AdjListVertex<string, float>>() { "A", "B","C", "D", "E", "F", "G", "H", "I" }
+//    );
 
-SCCGraph.AddBiDirectionalEdge("A", "B", 1, 1);
+//SCCGraph.AddBiDirectionalEdge("A", "B", 1, 1);
 
-SCCGraph.AddBiDirectionalEdge("A", "C", 1, 1);
+//SCCGraph.AddBiDirectionalEdge("A", "C", 1, 1);
 
-SCCGraph.AddEdge("B", "D", 1);
+//SCCGraph.AddEdge("B", "D", 1);
 
-SCCGraph.AddEdge("C", "D", 1);
+//SCCGraph.AddEdge("C", "D", 1);
 
-SCCGraph.AddBiDirectionalEdge("D", "F", 1, 1);
+//SCCGraph.AddBiDirectionalEdge("D", "F", 1, 1);
 
-SCCGraph.AddEdge("E", "B", 1);
+//SCCGraph.AddEdge("E", "B", 1);
 
-SCCGraph.AddEdge("E", "I", 1);
+//SCCGraph.AddEdge("E", "I", 1);
 
-SCCGraph.AddEdge("E", "F", 1);
+//SCCGraph.AddEdge("E", "F", 1);
 
-SCCGraph.AddEdge("G", "E", 1);
+//SCCGraph.AddEdge("G", "E", 1);
 
-SCCGraph.AddEdge("H", "G", 1);
+//SCCGraph.AddEdge("H", "G", 1);
 
-SCCGraph.AddEdge("H", "I", 1);
+//SCCGraph.AddEdge("H", "I", 1);
 
-SCCGraph.AddEdge("H", "H", 1);
+//SCCGraph.AddEdge("H", "H", 1);
 
-SCCGraph.AddEdge("I", "F", 1);
+//SCCGraph.AddEdge("I", "F", 1);
 
-SCCGraph.AddEdge("I", "G", 1);
+//SCCGraph.AddEdge("I", "G", 1);
 
-Console.WriteLine(SCCGraph);
+//Console.WriteLine(SCCGraph);
 
-StronglyConnectedComponentsDetector<AdjListVertex<string, float>, string, float> SCCC =
-    new StronglyConnectedComponentsDetector<AdjListVertex<string, float>, string, float>(SCCGraph);
+//StronglyConnectedComponentsDetector<AdjListVertex<string, float>, string, float> SCCC =
+//    new StronglyConnectedComponentsDetector<AdjListVertex<string, float>, string, float>(SCCGraph);
 
-var r = SCCC.Solve();
+//var r = SCCC.Solve();
+
+//if (!r.HasError)
+//{
+//    PrintMessage("Strongly Connected Components are:", ConsoleColor.Green);
+
+//    var lowlink = (Dictionary<string, int>)r.Result[0];
+
+//    PrintInLine(lowlink);
+//}
+
+#endregion
+
+#region Travel SalesMan Problem
+
+AdjacentMatrixGraph<float> TravelSalesManGraph = new AdjacentMatrixGraph<float>(4);
+
+TravelSalesManGraph.AddBiDirectionalEdge(0, 1, 10, 5);
+
+TravelSalesManGraph.AddBiDirectionalEdge(0, 2, 8, 6);
+
+TravelSalesManGraph.AddBiDirectionalEdge(0, 3, 4, 6);
+
+TravelSalesManGraph.AddBiDirectionalEdge(1, 3, 5, 9);
+
+TravelSalesManGraph.AddBiDirectionalEdge(1, 2, 3, 2);
+
+TravelSalesManGraph.AddBiDirectionalEdge(2, 3, 5, 7);
+
+Console.WriteLine(TravelSalesManGraph);
+
+TravelSalesmanProblem<float> TSMP = new TravelSalesmanProblem<float>(TravelSalesManGraph, 
+    float.PositiveInfinity);
+
+var r = TSMP.Solve(new TravelSalesmanProblemArgs(0));
 
 if (!r.HasError)
 {
-    PrintMessage("Strongly Connected Components are:", ConsoleColor.Green);
+    var minPathCost = (float)r.Result[0];
 
-    var lowlink = (Dictionary<string, int>)r.Result[0];
+    PrintMessage("Minimum Cost Rout Was found:", ConsoleColor.Green);
 
-    PrintInLine(lowlink);
+    var route = (int[])r.Result[1];
+
+    PrintInLine(route);
+
+    Console.WriteLine();
+
+    PrintValue(minPathCost, "Minimum cost route:", ConsoleColor.Green);    
 }
 
 #endregion

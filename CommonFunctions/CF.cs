@@ -53,10 +53,13 @@
             return str;
         }
 
-        public static void PrintValue<T>(T v, string str = "")
+        public static void PrintValue<T>(T v, string str = "", ConsoleColor color = ConsoleColor.White)
         {
+            Console.ForegroundColor = color;
 
             Console.WriteLine($"{str} {v}");
+
+            Console.ResetColor();
 
         }
 
