@@ -50,7 +50,7 @@ namespace GraphsMath.SolvingOfProblems
         private void Combinator(int bitNumber, int shift, int amountOf1, 
             int countOfDigits, List<int> bits)
         {
-            if (amountOf1 == 0)
+            if (amountOf1 == 0) // Base case
                 bits.Add(bitNumber);
             else
                 for (int i = shift; i < countOfDigits; i++)

@@ -971,41 +971,78 @@ Console.WriteLine("Graphs Test Project");
 
 #region Travel SalesMan Problem
 
-AdjacentMatrixGraph<float> TravelSalesManGraph = new AdjacentMatrixGraph<float>(4);
+//AdjacentMatrixGraph<float> TravelSalesManGraph = new AdjacentMatrixGraph<float>(4);
 
-TravelSalesManGraph.AddBiDirectionalEdge(0, 1, 10, 5);
+//TravelSalesManGraph.AddBiDirectionalEdge(0, 1, 10, 5);
 
-TravelSalesManGraph.AddBiDirectionalEdge(0, 2, 8, 6);
+//TravelSalesManGraph.AddBiDirectionalEdge(0, 2, 8, 6);
 
-TravelSalesManGraph.AddBiDirectionalEdge(0, 3, 4, 6);
+//TravelSalesManGraph.AddBiDirectionalEdge(0, 3, 4, 6);
 
-TravelSalesManGraph.AddBiDirectionalEdge(1, 3, 5, 9);
+//TravelSalesManGraph.AddBiDirectionalEdge(1, 3, 5, 9);
 
-TravelSalesManGraph.AddBiDirectionalEdge(1, 2, 3, 2);
+//TravelSalesManGraph.AddBiDirectionalEdge(1, 2, 3, 2);
 
-TravelSalesManGraph.AddBiDirectionalEdge(2, 3, 5, 7);
+//TravelSalesManGraph.AddBiDirectionalEdge(2, 3, 5, 7);
 
-Console.WriteLine(TravelSalesManGraph);
+//Console.WriteLine(TravelSalesManGraph);
 
-TravelSalesmanProblem<float> TSMP = new TravelSalesmanProblem<float>(TravelSalesManGraph, 
-    float.PositiveInfinity);
+//TravelSalesmanProblem<float> TSMP = new TravelSalesmanProblem<float>(TravelSalesManGraph, 
+//    float.PositiveInfinity);
 
-var r = TSMP.Solve(new TravelSalesmanProblemArgs(0));
+//var r = TSMP.Solve(new TravelSalesmanProblemArgs(0));
+
+//if (!r.HasError)
+//{
+//    var minPathCost = (float)r.Result[0];
+
+//    PrintMessage("Minimum Cost Rout Was found:", ConsoleColor.Green);
+
+//    var route = (int[])r.Result[1];
+
+//    PrintInLine(route);
+
+//    Console.WriteLine();
+
+//    PrintValue(minPathCost, "Minimum cost route:", ConsoleColor.Green);    
+//}
+
+#endregion
+
+#region Eulerian path detection
+
+AdjacentListGraph<byte, int> graph = new AdjacentListGraph<byte, int>(
+    new List<AdjListVertex<byte, int>>() {0,1,2,3,4}
+    );
+
+graph.AddBiDirectionalEdge(0, 1, 0, 0);
+
+graph.AddBiDirectionalEdge(1, 2, 0, 0);
+
+graph.AddBiDirectionalEdge(0, 2, 0, 0);
+
+graph.AddBiDirectionalEdge(0, 3, 0, 0);
+
+graph.AddBiDirectionalEdge(3, 4, 0, 0);
+
+Console.WriteLine(graph);
+
+EulerianCycleDetector<AdjListVertex<byte, int>, byte, int> EulerianCycleDetector =
+    new EulerianCycleDetector<AdjListVertex<byte, int>, byte, int>(graph);
+
+var r = EulerianCycleDetector.Solve();
 
 if (!r.HasError)
 {
-    var minPathCost = (float)r.Result[0];
+    PrintMessage(r.Result[0] as string, ConsoleColor.Green);
+    
+    var path = (SingleLinkeed_List.LinkedSingleList<byte>)r.Result[1];
 
-    PrintMessage("Minimum Cost Rout Was found:", ConsoleColor.Green);
-
-    var route = (int[])r.Result[1];
-
-    PrintInLine(route);
-
-    Console.WriteLine();
-
-    PrintValue(minPathCost, "Minimum cost route:", ConsoleColor.Green);    
+    if(path!=null)
+    PrintInLine(path.GetData());
 }
+
+
 
 #endregion
 

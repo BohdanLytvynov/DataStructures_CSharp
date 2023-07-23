@@ -13,9 +13,13 @@ namespace SingleLinkeed_List
 
         private Node<T> m_head;
 
+        private int m_count;
+
         #endregion
 
         #region Properties
+
+        public int Count { get=> m_count; }
 
         public virtual Node<T> Head 
         {
@@ -58,6 +62,8 @@ namespace SingleLinkeed_List
             newNode.Next = m_head;
 
             m_head = newNode;
+
+            m_count++;
         }
 
 
@@ -80,6 +86,8 @@ namespace SingleLinkeed_List
 
                 last.Next = newNode;
             }
+
+            m_count++;
         }
 
         public virtual Node<T> Search(T data)
@@ -129,11 +137,15 @@ namespace SingleLinkeed_List
                     }
                 }
             }
+
+            m_count--;
         }
 
         public virtual void Clear()
         {
             m_head = null;
+
+            m_count = 0;
         }
         
         #endregion
