@@ -91,5 +91,27 @@ namespace GraphsMath.Graphs.Interfaces
 
         #endregion
 
-    }      
+    }
+
+    public interface IFlowGraph<TVertexKey, TFlowValue>
+    {
+        #region Properties
+
+        public int VertexCount { get; }
+
+        public SortedDictionary<TVertexKey, List<IFlowEdge<TVertexKey, TFlowValue>>> Graph { get; }
+
+        #endregion
+
+        #region Methods
+
+        IEnumerable<TVertexKey> GetAllVerteces();
+
+        IEnumerable<IFlowEdge<TVertexKey, TFlowValue>> GetAdjEdges(TVertexKey vertex);
+
+        Dictionary<TVertexKey, int> CreateVisitDS(
+            int visitToken);
+
+        #endregion
+    }
 }

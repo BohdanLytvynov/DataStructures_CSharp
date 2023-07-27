@@ -59,4 +59,32 @@ namespace GraphsMath.SolvingOfProblems
        
         #endregion
     }
+
+    public abstract class NetworkFlowProblemSolver<TVertexKey, TFlowValue>
+    {
+        #region Fields
+
+        IFlowGraph<TVertexKey, TFlowValue> m_graph;
+
+        #endregion
+
+        #region Properties
+
+        public IFlowGraph<TVertexKey, TFlowValue> FlowGraph { get=> m_graph; }
+
+        #endregion
+
+        #region Ctor
+        public NetworkFlowProblemSolver(IFlowGraph<TVertexKey, TFlowValue> flowGraph)
+        {
+            m_graph = flowGraph ?? throw new ArgumentNullException(nameof(flowGraph));
+        }
+        #endregion
+
+        #region Methods
+        public abstract SolverResult Solve(SolverArgsBase args = null);
+
+        
+        #endregion
+    }
 }

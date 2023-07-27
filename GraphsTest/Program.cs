@@ -1,10 +1,13 @@
 ﻿
 using GraphsMath.Graphs.ALGraphs;
 using GraphsMath.Graphs.AMGraphs;
+using GraphsMath.Graphs.FlowGraphs;
 using GraphsMath.Graphs.Graph_Components;
 using GraphsMath.Graphs.Interfaces;
 using GraphsMath.Graphs.MultiDimGrid;
 using GraphsMath.SolvingOfProblems;
+using GraphsMath.SolvingOfProblems.NetworkFlow;
+using GraphsMath.SolvingOfProblems.NetworkFlow.SolverArgs;
 using GraphsMath.SolvingOfProblems.ShortestPathProblem;
 using GraphsMath.SolvingOfProblems.ShortestPathProblemOnWDAG;
 using GraphsMath.SolvingOfProblems.SolverArgs;
@@ -711,7 +714,7 @@ Console.WriteLine("Graphs Test Project");
 
 
 //var graph = new AdjacentListGraph<byte, double>(
-//    new List<AdjListVertex<byte, double>>() { 0,1,2,3,4,5,6,7,8,9 }
+//    new List<AdjListVertex<byte, double>>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }
 //    );
 
 //graph.AddEdge(0, 1, 5);
@@ -732,7 +735,7 @@ Console.WriteLine("Graphs Test Project");
 //Console.WriteLine(graph);
 
 //BellmanFord<AdjListVertex<byte, double>, byte, double> BellFord =
-//    new BellmanFord<AdjListVertex<byte, double>, byte, double>(graph, double.PositiveInfinity, 
+//    new BellmanFord<AdjListVertex<byte, double>, byte, double>(graph, double.PositiveInfinity,
 //    double.NegativeInfinity);
 
 //var r = BellFord.Solve();
@@ -1011,38 +1014,72 @@ Console.WriteLine("Graphs Test Project");
 
 #region Eulerian path detection
 
-AdjacentListGraph<byte, int> graph = new AdjacentListGraph<byte, int>(
-    new List<AdjListVertex<byte, int>>() {0,1,2,3,4}
-    );
+//AdjacentListGraph<byte, int> graph = new AdjacentListGraph<byte, int>(
+//    new List<AdjListVertex<byte, int>>() {0,1,2,3,4}
+//    );
 
-graph.AddBiDirectionalEdge(0, 1, 0, 0);
+//graph.AddBiDirectionalEdge(0, 1, 0, 0);
 
-graph.AddBiDirectionalEdge(1, 2, 0, 0);
+//graph.AddBiDirectionalEdge(1, 2, 0, 0);
 
-graph.AddBiDirectionalEdge(0, 2, 0, 0);
+//graph.AddBiDirectionalEdge(0, 2, 0, 0);
 
-graph.AddBiDirectionalEdge(0, 3, 0, 0);
+//graph.AddBiDirectionalEdge(0, 3, 0, 0);
 
-graph.AddBiDirectionalEdge(3, 4, 0, 0);
+//graph.AddBiDirectionalEdge(3, 4, 0, 0);
 
-Console.WriteLine(graph);
+//Console.WriteLine(graph);
 
-EulerianCycleDetector<AdjListVertex<byte, int>, byte, int> EulerianCycleDetector =
-    new EulerianCycleDetector<AdjListVertex<byte, int>, byte, int>(graph);
+//EulerianCycleDetector<AdjListVertex<byte, int>, byte, int> EulerianCycleDetector =
+//    new EulerianCycleDetector<AdjListVertex<byte, int>, byte, int>(graph);
 
-var r = EulerianCycleDetector.Solve();
+//var r = EulerianCycleDetector.Solve();
+
+//if (!r.HasError)
+//{
+//    PrintMessage(r.Result[0] as string, ConsoleColor.Green);
+
+//    var path = (SingleLinkeed_List.LinkedSingleList<byte>)r.Result[1];
+
+//    if(path!=null)
+//    PrintInLine(path.GetData());
+//}
+
+
+
+#endregion
+
+#region FlowGraph
+
+FlowGraph<int, int> flowGraph = new FlowGraph<int, int>(
+    new List<int>() { 0,1,2,3,4,5 });
+
+flowGraph.AddEdge(0,1,10);
+
+flowGraph.AddEdge(0,2,10);
+
+flowGraph.AddEdge(2,3,15);
+
+flowGraph.AddEdge(3, 1, 6);
+
+flowGraph.AddEdge(1, 4, 25);
+
+flowGraph.AddEdge(4,5,10);
+
+flowGraph.AddEdge(3,5,10);
+
+Console.WriteLine(flowGraph);
+
+FordFulkersonNetworkFlow<int, int> FFNS = new FordFulkersonNetworkFlow<int, int>(flowGraph, int.MaxValue/2);
+
+var r = FFNS.Solve(new FordFulkersonSolverArg<int>(0, 5));
 
 if (!r.HasError)
 {
-    PrintMessage(r.Result[0] as string, ConsoleColor.Green);
-    
-    var path = (SingleLinkeed_List.LinkedSingleList<byte>)r.Result[1];
+    int maxFlow = (int)r.Result[0];
 
-    if(path!=null)
-    PrintInLine(path.GetData());
+    PrintValue(maxFlow, "Max Flow:");
 }
-
-
 
 #endregion
 
