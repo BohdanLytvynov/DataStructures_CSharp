@@ -36,7 +36,7 @@ namespace GraphsMath.SolvingOfProblems
 
             var emptyalue = (Graph as AdjacentMatrixGraph<TWeight>).NoEdgeValue;
 
-            if (dc[start, end].Equals(emptyalue))
+            if (dc[start, end].Equals(emptyalue) || start.Equals(end))
             {
                 return path;
             }

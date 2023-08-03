@@ -19,9 +19,14 @@ namespace GraphsMath.Graphs.FlowGraphs
         private SortedDictionary<TVertexKey, List<IFlowEdge<TVertexKey, TFlowValue>>> m_flowGraph;
 
         private int m_VertexCount;
+
+        private TFlowValue m_MaxEdgeCapacity;
         #endregion
 
         #region Properties
+
+        public TFlowValue MaxEdgeCapacity { get => m_MaxEdgeCapacity; }
+
         //Here graph is represented as sorted dictionary of Vertex Keys and
         //Lists of adjacent Edges to this graph
         public SortedDictionary<TVertexKey, List<IFlowEdge<TVertexKey, TFlowValue>>> Graph
@@ -38,6 +43,8 @@ namespace GraphsMath.Graphs.FlowGraphs
         {
             m_flowGraph = new SortedDictionary<TVertexKey, List<IFlowEdge<TVertexKey, TFlowValue>>>();
 
+            m_MaxEdgeCapacity = default;
+
             foreach (var v in Verteces)
             {
                 m_flowGraph.Add(v, new List<IFlowEdge<TVertexKey, TFlowValue>>());
@@ -48,6 +55,48 @@ namespace GraphsMath.Graphs.FlowGraphs
         #endregion
 
         #region Methods
+
+        public Dictionary<TVertexKey, TValue> BuildVertexTableWithValue<TValue>(TValue initValue)
+        {
+            if (Graph == null)
+                throw new EmptyGraphException("Graph is null!");
+            
+            if (m_VertexCount == 0)
+                throw new EmptyGraphException("The amount of verteces is 0 in the Graph!");
+
+            Dictionary<TVertexKey, TValue> dictionary = new Dictionary<TVertexKey, TValue>();
+
+            foreach (var v in Graph.Keys)
+            {
+                dictionary.Add(v, initValue);
+            }
+
+            return dictionary;
+        }
+
+        public TFlowValue SelectMinFlow(TFlowValue f1, TFlowValue f2)
+        {
+            if (f1.CompareTo(f2) == -1) //f1 < f2
+            {
+                return f1;
+            }
+            else
+            {
+                return f2;
+            }
+        }
+
+        public TFlowValue SelectMaxFlow(TFlowValue f1, TFlowValue f2)
+        {
+            if (f1.CompareTo(f2) == -1) //f1 < f2
+            {
+                return f2;
+            }
+            else
+            {
+                return f1;
+            }
+        }
 
         #region VisitDS Generator
         public Dictionary<TVertexKey, int> CreateVisitDS(
@@ -72,6 +121,8 @@ namespace GraphsMath.Graphs.FlowGraphs
         {
             if (capacity.CompareTo((dynamic)0) == -1)
                 throw new Exception("Capacity of the forward gooing edge can't be zero!!!");
+
+            m_MaxEdgeCapacity = SelectMaxFlow(m_MaxEdgeCapacity, capacity);
 
             var edge = new FlowEdge<TVertexKey, TFlowValue>(from, to, capacity);
 

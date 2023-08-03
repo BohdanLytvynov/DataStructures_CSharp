@@ -762,17 +762,17 @@ Console.WriteLine("Graphs Test Project");
 
 //AdjacentMatrixGraph<float> FWgraph = new AdjacentMatrixGraph<float>(4, float.PositiveInfinity);
 
-//FWgraph.AddEdge(0,1,8);
-//FWgraph.AddEdge(0,3,1);
-//FWgraph.AddEdge(1,2,1);
-//FWgraph.AddEdge(2,0,4);
-//FWgraph.AddEdge(3,1,2);
-//FWgraph.AddEdge(3,2,9);
+//FWgraph.AddEdge(0, 1, 8);
+//FWgraph.AddEdge(0, 3, 1);
+//FWgraph.AddEdge(1, 2, 1);
+//FWgraph.AddEdge(2, 0, 4);
+//FWgraph.AddEdge(3, 1, 2);
+//FWgraph.AddEdge(3, 2, 9);
 ////Explicitly set condition that there are no self edges
-//FWgraph.AddEdge(0,0,0);
-//FWgraph.AddEdge(1,1,0);
-//FWgraph.AddEdge(2,2,0);
-//FWgraph.AddEdge(3,3,0);
+//FWgraph.AddEdge(0, 0, 0);
+//FWgraph.AddEdge(1, 1, 0);
+//FWgraph.AddEdge(2, 2, 0);
+//FWgraph.AddEdge(3, 3, 0);
 
 //Console.WriteLine(FWgraph);
 
@@ -804,7 +804,7 @@ Console.WriteLine("Graphs Test Project");
 //        {
 //            var path = fw.ReconstructPath(s, v, next, dm);
 
-//            PrintMessage($"Path from {s} to {v} with weight {dm[s,v]}:", ConsoleColor.Yellow);
+//            PrintMessage($"Path from {s} to {v} with weight {dm[s, v]}:", ConsoleColor.Yellow);
 
 //            PrintInLine(path);
 //        }
@@ -1051,35 +1051,81 @@ Console.WriteLine("Graphs Test Project");
 
 #region FlowGraph
 
-FlowGraph<int, int> flowGraph = new FlowGraph<int, int>(
-    new List<int>() { 0,1,2,3,4,5 });
+#region Ford Folkerson Solver
 
-flowGraph.AddEdge(0,1,10);
+//FlowGraph<int, int> flowGraph = new FlowGraph<int, int>(
+//    new List<int>() { 0, 1, 2, 3, 4, 5 });
 
-flowGraph.AddEdge(0,2,10);
+//flowGraph.AddEdge(0, 1, 10);
 
-flowGraph.AddEdge(2,3,15);
+//flowGraph.AddEdge(0, 2, 10);
 
-flowGraph.AddEdge(3, 1, 6);
+//flowGraph.AddEdge(2, 3, 15);
 
-flowGraph.AddEdge(1, 4, 25);
+//flowGraph.AddEdge(3, 1, 6);
 
-flowGraph.AddEdge(4,5,10);
+//flowGraph.AddEdge(1, 4, 25);
 
-flowGraph.AddEdge(3,5,10);
+//flowGraph.AddEdge(4, 5, 10);
 
-Console.WriteLine(flowGraph);
+//flowGraph.AddEdge(3, 5, 10);
 
-FordFulkersonNetworkFlow<int, int> FFNS = new FordFulkersonNetworkFlow<int, int>(flowGraph, int.MaxValue/2);
+//Console.WriteLine(flowGraph);
 
-var r = FFNS.Solve(new FordFulkersonSolverArg<int>(0, 5));
+//FordFulkersonNetworkFlow<int, int> FFNS = new FordFulkersonNetworkFlow<int, int>(flowGraph, int.MaxValue / 2);
 
-if (!r.HasError)
-{
-    int maxFlow = (int)r.Result[0];
+//var r = FFNS.Solve(new FordFulkersonSolverArg<int>(0, 5));
 
-    PrintValue(maxFlow, "Max Flow:");
-}
+//if (!r.HasError)
+//{
+//    PrintMessage(r.ProblemName, ConsoleColor.Green);
+
+//    int maxFlow = (int)r.Result[0];
+
+//    PrintValue(maxFlow, "Max Flow:");
+//}
+
+#endregion
+
+#region EdmondKarp Solver
+
+//FlowGraph<int, int> flowGraph2 = new FlowGraph<int, int>(
+//    new List<int>() { 0, 1, 2, 3, 4, 5 });
+
+//flowGraph2.AddEdge(0, 1, 10);
+
+//flowGraph2.AddEdge(0, 2, 10);
+
+//flowGraph2.AddEdge(2, 3, 15);
+
+//flowGraph2.AddEdge(3, 1, 6);
+
+//flowGraph2.AddEdge(1, 4, 25);
+
+//flowGraph2.AddEdge(4, 5, 10);
+
+//flowGraph2.AddEdge(3, 5, 10);
+
+//Console.WriteLine(flowGraph2);
+
+//EdmondsKarpNetworkFlow<int, int> EKNF = new EdmondsKarpNetworkFlow<int, int>(flowGraph2,
+//    int.MaxValue
+//    / 2);
+
+//var r2 = EKNF.Solve(new EdmondsKarpSolverArgs<int>(0, 5));
+
+//if (!r2.HasError)
+//{
+//    PrintMessage(r2.ProblemName, ConsoleColor.Green);
+
+//    int maxFlow = (int)r2.Result[0];
+
+//    PrintValue(maxFlow, "Max Flow:");
+//}
+
+#endregion
+
+
 
 #endregion
 

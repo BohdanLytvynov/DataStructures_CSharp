@@ -15,15 +15,13 @@ namespace GraphsMath.SolvingOfProblems.NetworkFlow
         where TVertexKey : IEquatable<TVertexKey>, IComparable<TVertexKey>
         where TFLowValue : IEquatable<TFLowValue>, IComparable<TFLowValue>
     {
-        #region Fields
-        TFLowValue m_InitFlowValue;
-        #endregion
+        
 
         #region Ctor
         public FordFulkersonNetworkFlow(IFlowGraph<TVertexKey, TFLowValue> graph, 
-            TFLowValue initFlowValue) : base(graph)
+            TFLowValue initFlowValue) : base(graph, initFlowValue)
         {
-            m_InitFlowValue = initFlowValue;
+           
         }
         #endregion
 
@@ -31,67 +29,68 @@ namespace GraphsMath.SolvingOfProblems.NetworkFlow
 
         #region Private Methods
 
-        private TFLowValue SelectMinFlow(TFLowValue f1, TFLowValue f2)
+        private double CalculateDelta()
         {
-            if (f1.CompareTo(f2) == -1) //f1 < f2
+            double delta = 0;
+
+            double i = 0;
+
+            while ((dynamic)delta <= FlowGraph.MaxEdgeCapacity)
             {
-                return f1;
-            }
-            else
-            {
-                return f2;
-            }
+                delta = Math.Pow(2.0, i);
+                i++;
+            } 
+
+            return delta/=2;
         }
 
 
-        private TFLowValue CalculateBNValueviaDFS(TVertexKey verstex, 
+        private TFLowValue CalculateBNValueviaDFS(TVertexKey vertex, 
             TVertexKey end, TFLowValue flow, Dictionary<TVertexKey, int> visited, 
-            ref int visitToken)
-        {
-            TFLowValue bottleNeck = default;
-
-            if (verstex.Equals(end)) return flow; //Base case to stop the reccurtion
+            int visitToken, double delta)
+        {             
+            if (vertex.Equals(end)) return flow; //Base case to stop the reccurtion
 
             //Mark current vertex as visited
 
-            visited[verstex] = visitToken;
+            visited[vertex] = visitToken;
 
             //Get neighbor Edges
 
-            var edges = FlowGraph.GetAdjEdges(verstex);
-
-            IFlowEdge<TVertexKey, TFLowValue> currentEdge = null;
+            var edges = FlowGraph.GetAdjEdges(vertex);            
 
             //Push the flow through the edge
             foreach (var e in edges)
             {
-                currentEdge = e;
+                TFLowValue remCapacity = e.GetRemainingCapacity();
 
-                if ((dynamic)e.GetRemainingCapacity() > (dynamic)0 && visited[e.To] != visitToken
-                    && !e.IsResidual())
+                if ((remCapacity >= (dynamic)delta && 
+                    visited[e.To] != visitToken))
                 {
-                    bottleNeck = CalculateBNValueviaDFS(e.To, end, SelectMinFlow(flow, 
-                        e.GetRemainingCapacity()), visited, ref visitToken);
+                    TFLowValue bottleNeck = CalculateBNValueviaDFS(e.To, end, 
+                        FlowGraph.SelectMinFlow(flow, 
+                        remCapacity), visited, visitToken, delta);
+
+                    if (bottleNeck.CompareTo((dynamic)0) == 1)
+                    {
+                        e.Augment(bottleNeck);
+                        return bottleNeck;
+                    }
                 }
-            }
+            }            
 
-            if (bottleNeck.CompareTo((dynamic)0) == 1)
-            {
-                currentEdge.Augment(bottleNeck);                
-            }
-
-            return bottleNeck;
+            return default;
         }
 
         #endregion
-
+        //Modified with capacity scaling method
         public override SolverResult Solve(SolverArgsBase args = null)
         {                        
             Exception ex = null;
 
             SolverResult res = null;
 
-            int visitToken = -1;
+            int visitToken = 0;
 
             TFLowValue maxFlow = default;
 
@@ -109,18 +108,33 @@ namespace GraphsMath.SolvingOfProblems.NetworkFlow
                     (TVertexKey)args.Args[1];
                                 
                 var visited = FlowGraph.CreateVisitDS(visitToken);
-
-                visitToken++;
-
+                
                 //Main Solver
 
-                for (TFLowValue f = CalculateBNValueviaDFS(start, end, m_InitFlowValue, visited, ref visitToken); 
-                    !f.Equals(0); f = CalculateBNValueviaDFS(start, end, m_InitFlowValue, visited, ref visitToken))
-                {
-                    visitToken++;
+                //Calculate delta value
 
-                    maxFlow += (dynamic)f;
+                var delta = CalculateDelta();
+
+                for (TFLowValue flow = default ; delta>0; delta/=2)
+                {
+                    do
+                    {
+                        visitToken++;//Mark all verteces unvisited
+
+                        flow = CalculateBNValueviaDFS(start, end, InitFlowValue, visited, visitToken, delta);
+
+                        maxFlow += (dynamic)flow;
+
+                    } while (flow.CompareTo(default) != 0);
                 }
+
+                //for (TFLowValue f = CalculateBNValueviaDFS(start, end, InitFlowValue, visited, ref visitToken); 
+                //    !f.Equals(0); f = CalculateBNValueviaDFS(start, end, InitFlowValue, visited, ref visitToken))
+                //{
+                //    visitToken++;
+
+                //    maxFlow += (dynamic)f;
+                //}
 
             }
             catch (Exception e)

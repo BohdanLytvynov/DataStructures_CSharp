@@ -97,6 +97,8 @@ namespace GraphsMath.Graphs.Interfaces
     {
         #region Properties
 
+        public TFlowValue MaxEdgeCapacity { get; }
+
         public int VertexCount { get; }
 
         public SortedDictionary<TVertexKey, List<IFlowEdge<TVertexKey, TFlowValue>>> Graph { get; }
@@ -104,6 +106,12 @@ namespace GraphsMath.Graphs.Interfaces
         #endregion
 
         #region Methods
+
+        Dictionary<TVertexKey, TValue> BuildVertexTableWithValue<TValue>(TValue Initvalue);
+
+        TFlowValue SelectMinFlow(TFlowValue f1, TFlowValue f2);
+
+        TFlowValue SelectMaxFlow(TFlowValue f1, TFlowValue f2);
 
         IEnumerable<TVertexKey> GetAllVerteces();
 
