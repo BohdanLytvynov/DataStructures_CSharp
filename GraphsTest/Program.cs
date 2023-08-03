@@ -1125,7 +1125,41 @@ Console.WriteLine("Graphs Test Project");
 
 #endregion
 
+#region Dinic's algorithm
 
+FlowGraph<int, int> flowGraph = new FlowGraph<int, int>(
+    new List<int>() { 0, 1, 2, 3, 4, 5 });
+
+flowGraph.AddEdge(0, 1, 10);
+
+flowGraph.AddEdge(0, 2, 10);
+
+flowGraph.AddEdge(2, 3, 15);
+
+flowGraph.AddEdge(3, 1, 6);
+
+flowGraph.AddEdge(1, 4, 25);
+
+flowGraph.AddEdge(4, 5, 10);
+
+flowGraph.AddEdge(3, 5, 10);
+
+Console.WriteLine(flowGraph);
+
+DinicSolver<int, int> DinicSolver = new DinicSolver<int, int>(flowGraph, int.MaxValue/2);
+
+var r2 = DinicSolver.Solve(new EdmondsKarpSolverArgs<int>(0, 5));
+
+if (!r2.HasError)
+{
+    PrintMessage(r2.ProblemName, ConsoleColor.Green);
+
+    int maxFlow = (int)r2.Result[0];
+
+    PrintValue(maxFlow, "Max Flow:");
+}
+
+#endregion
 
 #endregion
 
