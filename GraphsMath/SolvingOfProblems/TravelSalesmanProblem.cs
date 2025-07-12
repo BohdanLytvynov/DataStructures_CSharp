@@ -2,11 +2,6 @@
 using GraphsMath.Graphs.Interfaces;
 using GraphsMath.SolvingOfProblems.CustomExceptons;
 using GraphsMath.SolvingOfProblems.SolverArgs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphsMath.SolvingOfProblems
 {
@@ -55,11 +50,11 @@ namespace GraphsMath.SolvingOfProblems
             else
                 for (int i = shift; i < countOfDigits; i++)
                 {
-                    bitNumber |= 1 << i;
+                    bitNumber |= 1 << i;//Set bit at index i
 
                     Combinator(bitNumber, i + 1, amountOf1 - 1, countOfDigits, bits);
 
-                    bitNumber &= ~(1 << i);
+                    bitNumber &= ~(1 << i);//Take away bit at index i
                 }
         }
 
@@ -74,7 +69,7 @@ namespace GraphsMath.SolvingOfProblems
 
         private bool NotInSubset(int i, int subset)
         {
-            return ((1 << i) & subset) == 0;
+            return ((1 << i) & subset) == 0;//Check bit value at i index
         }
 
         private void Solve(TWeight[,] matrix, TWeight[,] memoMatrix, int startVertex)

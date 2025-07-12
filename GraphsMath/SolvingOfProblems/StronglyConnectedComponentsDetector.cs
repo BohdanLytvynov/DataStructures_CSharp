@@ -71,10 +71,10 @@ namespace GraphsMath.SolvingOfProblems
                     if (v.Equals(at))
                     {
                         break;
-                    }
-
-                    SCCCount++;
+                    }                    
                 }
+
+                SCCCount++;
             }
 
         }
@@ -131,7 +131,7 @@ namespace GraphsMath.SolvingOfProblems
             }
 
             res = new SolverResult("StronglyConnectedComponentsDetector", 
-                new List<object>() { low_link }, ex != null? true:false, ex);
+                new List<object>() { low_link, SCCCount }, ex != null? true:false, ex);
 
             return res;
         }

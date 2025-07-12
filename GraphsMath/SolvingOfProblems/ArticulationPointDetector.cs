@@ -48,13 +48,13 @@ namespace GraphsMath.SolvingOfProblems
             {
                 var k = Graph.GetVertexKeyFromVertex(n);
 
-                if (!visit[k])
-                {
-                    if (parent.Equals(at))
-                    {
-                        continue;
-                    }
+                if (parent.Equals(k))
+                {     
+                    continue;
+                }
 
+                if (!visit[k])
+                {                    
                     DFSMod(root, k ,at, ref id, ref outEdgeCount, visit, ids, low_links, 
                         isArt);
 

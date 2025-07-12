@@ -164,85 +164,85 @@ Console.WriteLine("Graphs Test Project");
 
 #region Shortes path problem
 
-//AdjacentMatrixGraph<int> g4 = new AdjacentMatrixGraph<int>(9);
+AdjacentMatrixGraph<int> g4 = new AdjacentMatrixGraph<int>(9);
 
-//g4.AddEdge(0, 1, 1);
-//g4.AddEdge(0, 2, 1);
-//g4.AddEdge(0, 3, 1);
+g4.AddEdge(0, 1, 1);
+g4.AddEdge(0, 2, 1);
+g4.AddEdge(0, 3, 1);
 
-//g4.AddEdge(1, 2, 1);
-//g4.AddEdge(1, 5, 1);
+g4.AddEdge(1, 2, 1);
+g4.AddEdge(1, 5, 1);
 
-//g4.AddEdge(2, 5, 1);
-//g4.AddEdge(2, 4, 1);
+g4.AddEdge(2, 5, 1);
+g4.AddEdge(2, 4, 1);
 
-//g4.AddEdge(3, 2, 1);
-//g4.AddEdge(3, 4, 1);
+g4.AddEdge(3, 2, 1);
+g4.AddEdge(3, 4, 1);
 
-//g4.AddEdge(4, 6, 1);
-//g4.AddEdge(4, 7, 1);
+g4.AddEdge(4, 6, 1);
+g4.AddEdge(4, 7, 1);
 
-//g4.AddEdge(5, 4, 1);
-//g4.AddEdge(5, 6, 1);
+g4.AddEdge(5, 4, 1);
+g4.AddEdge(5, 6, 1);
 
-//g4.AddEdge(6, 7, 1);
-//g4.AddEdge(6, 8, 1);
+g4.AddEdge(6, 7, 1);
+g4.AddEdge(6, 8, 1);
 
-//g4.AddEdge(7, 8, 1);
+g4.AddEdge(7, 8, 1);
 
-//PrintMessage("Adjacency matrix", ConsoleColor.Green);
+PrintMessage("Adjacency matrix", ConsoleColor.Green);
 
-//Console.WriteLine(g4);
+Console.WriteLine(g4);
 
-//int nullV = -1;
+int nullV = -1;
 
 
-//ShortestPath_Problem<int, int, int> SPP =
-//    new ShortestPath_Problem<int, int, int>(g4, nullV);
+ShortestPath_Problem<int, int, int> SPP =
+    new ShortestPath_Problem<int, int, int>(g4, nullV);
 
-//int start = 2;
+int start = 2;
 
-//var r = SPP.Solve(new ShortestPathProblemArgs<int>(start));
+var r = SPP.Solve(new ShortestPathProblemArgs<int>(start));
 
-//if (!r.HasError)
-//{
-//    PrintMessage($"Prev Path Array if we start from {start}:", ConsoleColor.Yellow);
+if (!r.HasError)
+{
+    PrintMessage($"Prev Path Array if we start from {start}:", ConsoleColor.Yellow);
 
-//    Console.WriteLine();
+    Console.WriteLine();
 
-//    PrintInLine((Dictionary<int, int>)r.Result[0]);
+    PrintInLine((Dictionary<int, int>)r.Result[0]);
 
-//    Console.WriteLine();
+    Console.WriteLine();
 
-//    List<int> Path = null;
+    List<int> Path = null;
 
-//    for (int i = 0; i < g4.VertexCount; i++)
-//    {
-//        Path = SPP.ReconstructPath(start, i, (Dictionary<int, int>)r.Result[0]);
+    for (int i = 0; i < g4.VertexCount; i++)
+    {
+        Path = SPP.ReconstructPath(start, i, (Dictionary<int, int>)r.Result[0]);
 
-//        PrintMessage($"Index: {i}", ConsoleColor.Green);
+        PrintMessage($"Index: {i}", ConsoleColor.Green);
 
-//        Console.WriteLine();
+        Console.WriteLine();
 
-//        Console.WriteLine();
+        Console.WriteLine();
 
-//        PrintMessage("Shortest path was found: ", ConsoleColor.Yellow);
+        PrintMessage("Shortest path was found: ", ConsoleColor.Yellow);
 
-//        Console.WriteLine();
+        Console.WriteLine();
 
-//        PrintInLine(Path);
+        PrintInLine(Path);
 
-//        Console.WriteLine();
+        Console.WriteLine();
 
-//        Path.Clear();
+        Path.Clear();
 
-//    }
-//}
-//else
-//{
-//    Console.WriteLine();
-//    Console.WriteLine("Error!");
-//}
+    }
+}
+else
+{
+    Console.WriteLine();
+    Console.WriteLine("Error!");
+}
 
 
 #endregion
@@ -907,7 +907,7 @@ Console.WriteLine("Graphs Test Project");
 //ArticulationPointDetector<AdjListVertex<byte, float>, byte, float> APD =
 //    new ArticulationPointDetector<AdjListVertex<byte, float>, byte, float>(ArtPointDetectionGraph);
 
-//var r = APD.Solve(new ArticulationPointDetectorArgs<byte> ((byte)(ArtPointDetectionGraph.VertexCount + 1)));
+//var r = APD.Solve(new ArticulationPointDetectorArgs<byte>((byte)(ArtPointDetectionGraph.VertexCount + 1)));
 
 //if (!r.HasError)
 //{
@@ -923,7 +923,7 @@ Console.WriteLine("Graphs Test Project");
 #region Strongly connected components detection
 
 //AdjacentListGraph<string, float> SCCGraph = new AdjacentListGraph<string, float>(
-//    new List<AdjListVertex<string, float>>() { "A", "B","C", "D", "E", "F", "G", "H", "I" }
+//    new List<AdjListVertex<string, float>>() { "A", "B", "C", "D", "E", "F", "G", "H", "I" }
 //    );
 
 //SCCGraph.AddBiDirectionalEdge("A", "B", 1, 1);
@@ -963,6 +963,8 @@ Console.WriteLine("Graphs Test Project");
 
 //if (!r.HasError)
 //{
+//    PrintMessage($"SCC count:{r.Result[1]}", ConsoleColor.Green);
+
 //    PrintMessage("Strongly Connected Components are:", ConsoleColor.Green);
 
 //    var lowlink = (Dictionary<string, int>)r.Result[0];
@@ -990,7 +992,7 @@ Console.WriteLine("Graphs Test Project");
 
 //Console.WriteLine(TravelSalesManGraph);
 
-//TravelSalesmanProblem<float> TSMP = new TravelSalesmanProblem<float>(TravelSalesManGraph, 
+//TravelSalesmanProblem<float> TSMP = new TravelSalesmanProblem<float>(TravelSalesManGraph,
 //    float.PositiveInfinity);
 
 //var r = TSMP.Solve(new TravelSalesmanProblemArgs(0));
@@ -1007,7 +1009,7 @@ Console.WriteLine("Graphs Test Project");
 
 //    Console.WriteLine();
 
-//    PrintValue(minPathCost, "Minimum cost route:", ConsoleColor.Green);    
+//    PrintValue(minPathCost, "Minimum cost route:", ConsoleColor.Green);
 //}
 
 #endregion
@@ -1053,37 +1055,37 @@ Console.WriteLine("Graphs Test Project");
 
 #region Ford Folkerson Solver
 
-//FlowGraph<int, int> flowGraph = new FlowGraph<int, int>(
-//    new List<int>() { 0, 1, 2, 3, 4, 5 });
+FlowGraph<int, int> flowGraph = new FlowGraph<int, int>(
+    new List<int>() { 0, 1, 2, 3, 4, 5 });
 
-//flowGraph.AddEdge(0, 1, 10);
+flowGraph.AddEdge(0, 1, 10);
 
-//flowGraph.AddEdge(0, 2, 10);
+flowGraph.AddEdge(0, 2, 10);
 
-//flowGraph.AddEdge(2, 3, 15);
+flowGraph.AddEdge(2, 3, 15);
 
-//flowGraph.AddEdge(3, 1, 6);
+flowGraph.AddEdge(3, 1, 6);
 
-//flowGraph.AddEdge(1, 4, 25);
+flowGraph.AddEdge(1, 4, 25);
 
-//flowGraph.AddEdge(4, 5, 10);
+flowGraph.AddEdge(4, 5, 10);
 
-//flowGraph.AddEdge(3, 5, 10);
+flowGraph.AddEdge(3, 5, 10);
 
-//Console.WriteLine(flowGraph);
+Console.WriteLine(flowGraph);
 
-//FordFulkersonNetworkFlow<int, int> FFNS = new FordFulkersonNetworkFlow<int, int>(flowGraph, int.MaxValue / 2);
+FordFulkersonNetworkFlow<int, int> FFNS = new FordFulkersonNetworkFlow<int, int>(flowGraph, int.MaxValue / 2);
 
-//var r = FFNS.Solve(new FordFulkersonSolverArg<int>(0, 5));
+var r = FFNS.Solve(new FordFulkersonSolverArg<int>(0, 5));
 
-//if (!r.HasError)
-//{
-//    PrintMessage(r.ProblemName, ConsoleColor.Green);
+if (!r.HasError)
+{
+    PrintMessage(r.ProblemName, ConsoleColor.Green);
 
-//    int maxFlow = (int)r.Result[0];
+    int maxFlow = (int)r.Result[0];
 
-//    PrintValue(maxFlow, "Max Flow:");
-//}
+    PrintValue(maxFlow, "Max Flow:");
+}
 
 #endregion
 
@@ -1127,37 +1129,37 @@ Console.WriteLine("Graphs Test Project");
 
 #region Dinic's algorithm
 
-FlowGraph<int, int> flowGraph = new FlowGraph<int, int>(
-    new List<int>() { 0, 1, 2, 3, 4, 5 });
+//FlowGraph<int, int> flowGraph = new FlowGraph<int, int>(
+//    new List<int>() { 0, 1, 2, 3, 4, 5 });
 
-flowGraph.AddEdge(0, 1, 10);
+//flowGraph.AddEdge(0, 1, 10);
 
-flowGraph.AddEdge(0, 2, 10);
+//flowGraph.AddEdge(0, 2, 10);
 
-flowGraph.AddEdge(2, 3, 15);
+//flowGraph.AddEdge(2, 3, 15);
 
-flowGraph.AddEdge(3, 1, 6);
+//flowGraph.AddEdge(3, 1, 6);
 
-flowGraph.AddEdge(1, 4, 25);
+//flowGraph.AddEdge(1, 4, 25);
 
-flowGraph.AddEdge(4, 5, 10);
+//flowGraph.AddEdge(4, 5, 10);
 
-flowGraph.AddEdge(3, 5, 10);
+//flowGraph.AddEdge(3, 5, 10);
 
-Console.WriteLine(flowGraph);
+//Console.WriteLine(flowGraph);
 
-DinicSolver<int, int> DinicSolver = new DinicSolver<int, int>(flowGraph, int.MaxValue/2);
+//DinicSolver<int, int> DinicSolver = new DinicSolver<int, int>(flowGraph, int.MaxValue/2);
 
-var r2 = DinicSolver.Solve(new EdmondsKarpSolverArgs<int>(0, 5));
+//var r2 = DinicSolver.Solve(new EdmondsKarpSolverArgs<int>(0, 5));
 
-if (!r2.HasError)
-{
-    PrintMessage(r2.ProblemName, ConsoleColor.Green);
+//if (!r2.HasError)
+//{
+//    PrintMessage(r2.ProblemName, ConsoleColor.Green);
 
-    int maxFlow = (int)r2.Result[0];
+//    int maxFlow = (int)r2.Result[0];
 
-    PrintValue(maxFlow, "Max Flow:");
-}
+//    PrintValue(maxFlow, "Max Flow:");
+//}
 
 #endregion
 

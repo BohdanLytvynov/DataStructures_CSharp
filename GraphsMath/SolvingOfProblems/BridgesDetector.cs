@@ -77,7 +77,7 @@ namespace GraphsMath.SolvingOfProblems
 
             //Variables
 
-            int id = 0;
+            int id = 0;//DFS Detection time
 
             Dictionary<TVertexKey, TVertexKey> bridges =
                 new Dictionary<TVertexKey, TVertexKey>();
@@ -90,11 +90,11 @@ namespace GraphsMath.SolvingOfProblems
 
             var verteces = Graph.GetVerteces();
 
-            foreach (var verte in verteces)
+            foreach (var vertex in verteces)//O(n)
             {
-                ids.Add(Graph.GetVertexKeyFromVertex(verte), 0);
+                ids.Add(Graph.GetVertexKeyFromVertex(vertex), 0);
 
-                low_links.Add(Graph.GetVertexKeyFromVertex(verte), 0);
+                low_links.Add(Graph.GetVertexKeyFromVertex(vertex), 0);
             }
 
             try
